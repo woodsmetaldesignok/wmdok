@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forge & Fire Signs - Custom Metal Fabrication</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            height: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 10px rgba(255, 107, 53, 0.3));
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #ff6b35;
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #ff6b35;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="sparks" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="%23ff6b35" opacity="0.3"><animate attributeName="opacity" values="0.1;0.8;0.1" dur="2s" repeatCount="indefinite"/></circle></pattern></defs><rect width="100" height="100" fill="url(%23sparks)"/></svg>') repeat;
+            opacity: 0.1;
+            animation: sparkle 10s linear infinite;
+        }
+
+        @keyframes sparkle {
+            0% { transform: translateX(0) translateY(0); }
+            100% { transform: translateX(-20px) translateY(-20px); }
+        }
+
+        .hero-content {
+            z-index: 2;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            color: #fff;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7), 0 0 20px rgba(255, 107, 53, 0.3); }
+            to { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7), 0 0 30px rgba(255, 107, 53, 0.6); }
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: #ddd;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff6b35, #ff8c42);
+            color: white;
+            padding: 15px 40px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        /* Gallery Section */
+        .gallery {
+            padding: 5rem 0;
+            background: #fff;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            color: #333;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(45deg, #ff6b35, #ff8c42);
+            border-radius: 2px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .gallery-item {
+            background: #f8f8f8;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .gallery-item-image {
+            height: 250px;
+            background: linear-gradient(135deg, #666, #333);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gallery-item-image::before {
+            content: '🔥';
+            font-size: 3rem;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            opacity: 0.3;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .gallery-item-content {
+            padding: 1.5rem;
+        }
+
+        .gallery-item h3 {
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .gallery-item p {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        /* About Section */
+        .about {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+            color: #fff;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #ff6b35;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .feature {
+            background: rgba(255, 107, 53, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            border-left: 4px solid #ff6b35;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 5rem 0;
+            background: #fff;
+            text-align: center;
+        }
+
+        .etsy-link {
+            display: inline-block;
+            background: #f56500;
+            color: white;
+            padding: 20px 50px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin: 2rem 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(245, 101, 0, 0.3);
+        }
+
+        .etsy-link:hover {
+            background: #e55a00;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(245, 101, 0, 0.4);
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .contact-item {
+            background: #f8f8f8;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: #fff;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .about-features {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODI0IiBoZWlnaHQ9IjI4OCIgdmlld0JveD0iMCAwIDgyNCAyODgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHg9IjI1IiB5PSI1MyIgd2lkdGg9Ijc3NCIgaGVpZ2h0PSIxODIiIHJ4PSIyNSIgZmlsbD0iI0Y5RkFGQiIgc3Ryb2tlPSIjMzc3M0RDIiBzdHJva2Utd2lkdGg9IjYiLz4KPHA+CjxyZWN0IHg9IjQyIiB5PSI2OSIgd2lkdGg9IjE4IiBoZWlnaHQ9IjE4IiBmaWxsPSIjMzc3M0RDIi8+CjxyZWN0IHg9Ijc2NCIgeT0iMTk3IiB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIGZpbGw9IiMzNzczREMiLz4KPHA+CjxwYXRoIGQ9Ik0yNzIuNzI1IDk4LjQzNzVIMzM2LjQzVjEzMS43MTlIMzA3LjI5NVYxNzRIMjczLjYyNVYxMzEuNzE5SDI3Mi43MjVWOTguNDM3NVoiIGZpbGw9ImJsYWNrIi8+CjxwYXRoIGQ9Ik0zNTUuMDE5IDk4LjQzNzVIMzg5LjU0OUw0MDguMzY5IDE0Ni4wMzdMNDI3LjE4OSA5OC40Mzc1SDQ2MS43Mkw0MjYuNzM5IDE3NEgzODkuOTk5TDM1NS4wMTkgOTguNDM3NVoiIGZpbGw9ImJsYWNrIi8+CjxwYXRoIGQ9Ik00ODcuNTI0IDk4LjQzNzVINTUyLjEyNFYxMjMuODM4SDUyMS4xOTRWMTMwLjA2OEg1NDcuNzI0VjE0OC4wMzhINTIxLjE5NFYxNzRINDg3LjUyNFY5OC40Mzc1WiIgZmlsbD0iYmxhY2siLz4KPHA+CjxwYXRoIGQ9Ik0yNzIuNzI1IDk4LjQzNzVIMzM1LjA3NVYxMzEuNzE5SDMwNy4yOTVWMTc0SDI3My42MjVWMTMxLjcxOUgyNzIuNzI1Vjk4LjQzNzVaIiBmaWxsPSJibGFjayIvPgo=" class="logo" alt="Woods Custom Design & Fabrication">
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Woods Custom Design & Fabrication</h1>
+            <p>Handcrafted with precision, built to last a lifetime</p>
+            <a href="#gallery" class="cta-button">View Our Work</a>
+        </div>
+    </section>
+
+    <section id="gallery" class="gallery">
+        <div class="container">
+            <h2 class="section-title fade-in">Our Creations</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item fade-in">
+                    <div class="gallery-item-image">
+                        Custom Business Signs
+                    </div>
+                    <div class="gallery-item-content">
+                        <h3>Business Signage</h3>
+                        <p>Professional storefront signs that make your business stand out. Durable materials and eye-catching designs.</p>
+                    </div>
+                </div>
+                <div class="gallery-item fade-in">
+                    <div class="gallery-item-image">
+                        Rustic Home Decor
+                    </div>
+                    <div class="gallery-item-content">
+                        <h3>Home Decor Signs</h3>
+                        <p>Personalized metal signs for your home. From family names to inspirational quotes, crafted with care.</p>
+                    </div>
+                </div>
+                <div class="gallery-item fade-in">
+                    <div class="gallery-item-image">
+                        Industrial Markers
+                    </div>
+                    <div class="gallery-item-content">
+                        <h3>Industrial Signage</h3>
+                        <p>Heavy-duty signs for industrial applications. Weather-resistant and built for harsh environments.</p>
+                    </div>
+                </div>
+                <div class="gallery-item fade-in">
+                    <div class="gallery-item-image">
+                        Custom Artwork
+                    </div>
+                    <div class="gallery-item-content">
+                        <h3>Artistic Pieces</h3>
+                        <p>Unique metal art pieces that combine functionality with artistic expression. Each piece is one-of-a-kind.</p>
+                    </div>
+                </div>
+                <div class="gallery-item fade-in">
+                    <div class="gallery-item-image">
+                        Wedding Signs
+                    </div>
+                    <div class="gallery-item-content">
+                        <h3>Wedding & Events</h3>
+                        <p>Beautiful signs for special occasions. Perfect for weddings, anniversaries, and milestone celebrations.</p>
+                    </div>
+                </div>
+                <div class="gallery-item fade-in">
+                    <div class="gallery-item-image">
+                        Address Numbers
+                    </div>
+                    <div class="gallery-item-content">
+                        <h3>Address & Numbers</h3>
+                        <p>Custom address signs and house numbers. Elegant designs that enhance your home's curb appeal.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content fade-in">
+                <div class="about-text">
+                    <h2>Craftsmanship Meets Innovation</h2>
+                    <p>At Woods Custom Design & Fabrication, we combine traditional metalworking techniques with modern design to create signs that are both beautiful and durable. Each piece is carefully crafted by hand, ensuring attention to detail and quality that mass-produced signs simply can't match.</p>
+                    <p>Whether you need a single custom piece or multiple signs for your business, we work closely with you to bring your vision to life. Our signs are built to withstand the elements and stand the test of time.</p>
+                </div>
+                <div class="about-features">
+                    <div class="feature">
+                        <h4>🔥 Hand Forged</h4>
+                        <p>Traditional techniques meet modern precision</p>
+                    </div>
+                    <div class="feature">
+                        <h4>⚡ Weather Resistant</h4>
+                        <p>Built to last in any climate</p>
+                    </div>
+                    <div class="feature">
+                        <h4>🎨 Custom Design</h4>
+                        <p>Unique pieces tailored to your vision</p>
+                    </div>
+                    <div class="feature">
+                        <h4>⚒️ Quality Materials</h4>
+                        <p>Premium steel and finishing materials</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title fade-in">Ready to Order?</h2>
+            <p class="fade-in">Visit our Etsy store to browse available designs or contact us for custom work.</p>
+            
+            <a href="https://www.etsy.com/shop/YourShopName" class="etsy-link fade-in" target="_blank">
+                🛒 Shop on Etsy
+            </a>
+
+            <div class="contact-info">
+                <div class="contact-item fade-in">
+                    <h3>📧 Email</h3>
+                    <p>info@woodscustomfabrication.com</p>
+                </div>
+                <div class="contact-item fade-in">
+                    <h3>📞 Phone</h3>
+                    <p>(555) 123-4567</p>
+                </div>
+                <div class="contact-item fade-in">
+                    <h3>⏰ Response Time</h3>
+                    <p>We typically respond within 24 hours</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Woods Custom Design & Fabrication. All rights reserved. | Handcrafted with ❤️</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Header background change on scroll
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(0, 0, 0, 0.95)';
+            } else {
+                header.style.background = 'rgba(0, 0, 0, 0.9)';
+            }
+        });
+
+        // Add some interactive hover effects to gallery items
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
